@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="canonical" href="https://quadruped-gait-atlas.pages.dev/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23141b1a'/%3E%3Cpath d='M5 22 Q10 10 16 16 T27 10' fill='none' stroke='%234cc3ba' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+</style>
+<title>Quadruped Gait Atlas 3D</title>
+<meta name="description" content="Fourteen muscle-driven 3D bodies (a quadruped, a long-limbed broad-shouldered variant, a ten-legged body, a tripod, a six-legged walker, four humanoids and five comically proportioned bipeds), each on the gait that minimizes its metabolic cost; the animals are shown down to bones, muscles, organs and skin.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quadruped-gait-atlas.pages.dev/">
+<meta property="og:title" content="Quadruped Gait Atlas 3D">
+<meta property="og:description" content="Fourteen muscle-driven 3D bodies (a quadruped, a long-limbed broad-shouldered variant, a ten-legged body, a tripod, a six-legged walker, four humanoids and five comically proportioned bipeds), each on the gait that minimizes its metabolic cost; the animals are shown down to bones, muscles, organs and skin.">
+<meta property="og:image" content="https://quadruped-gait-atlas.pages.dev/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Five simulated creatures in anatomical view with translucent skin: a quadruped, a long-limbed broad-shouldered body, a ten-legged long-necked body, a tripod and a six-legged walker.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quadruped Gait Atlas 3D">
+<meta name="twitter:description" content="Fourteen muscle-driven 3D bodies (a quadruped, a long-limbed broad-shouldered variant, a ten-legged body, a tripod, a six-legged walker, four humanoids and five comically proportioned bipeds), each on the gait that minimizes its metabolic cost; the animals are shown down to bones, muscles, organs and skin.">
+<meta name="twitter:image" content="https://quadruped-gait-atlas.pages.dev/share.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root {
+  --ground: #f2f5f4; --surface: #ffffff; --surface-2: #e8eeec;
+  --ink: #121917; --ink-2: #44514d; --muted: #6b7874; --rule: #d6dfdc;
+  --accent: #0b6e6a; --accent-soft: #d5ebe8;
+  --bone: #2a302e; --bone-far: #a9b3b0; --paw: #121917; --grf: #0b6e6a; --grid: #e3e9e7;
+  --m0: #f1dfdc; --m1: #e6aca7; --m2: #d6716f; --m3: #b83342; --m4: #7e0c22;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #7d8784;
+  --up: #b83342; --down: #2a78d6;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0d1211; --surface: #141b1a; --surface-2: #1c2524; --ink: #e5edea; --ink-2: #b5c2be; --muted: #8b9a95; --rule: #28322f;
+    --accent: #4cc3ba; --accent-soft: #173834; --bone: #dfe6e3; --bone-far: #56625f; --paw: #e5edea; --grf: #4cc3ba; --grid: #1e2826;
+    --m0: #33282a; --m1: #6e2f37; --m2: #a83845; --m3: #e04f5d; --m4: #ff8a8f;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #8b9a95;
+    --up: #e66767; --down: #3987e5;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0d1211; --surface: #141b1a; --surface-2: #1c2524; --ink: #e5edea; --ink-2: #b5c2be; --muted: #8b9a95; --rule: #28322f;
+  --accent: #4cc3ba; --accent-soft: #173834; --bone: #dfe6e3; --bone-far: #56625f; --paw: #e5edea; --grf: #4cc3ba; --grid: #1e2826;
+  --m0: #33282a; --m1: #6e2f37; --m2: #a83845; --m3: #e04f5d; --m4: #ff8a8f;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #8b9a95;
+  --up: #e66767; --down: #3987e5;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--ground); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; padding-inline: 16px; padding-block: 0 48px; }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 28px; }
+header { padding-block: 28px 4px; display: grid; gap: 10px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 6vw, 60px); line-height: .95; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 26px; margin: 0; text-wrap: balance; }
+h3 { font-weight: 600; font-size: 13px; margin: 0; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.lede { max-width: 72ch; color: var(--ink-2); margin: 0; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 2px; background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.strip button { all: unset; cursor: pointer; background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; }
+.strip button:hover { background: var(--surface-2); }
+.strip button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.strip button[aria-pressed="true"] { background: var(--accent-soft); }
+.strip .v { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.strip .g { font-family: var(--font-display); font-weight: 600; font-size: 20px; line-height: 1.05; display: flex; align-items: center; gap: 6px; }
+.strip .c { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); }
+.key { width: 10px; height: 10px; border-radius: 50%; flex: none; display: inline-block; }
+.finding { margin: 0; max-width: 80ch; color: var(--ink-2); font-size: 14px; }
+.finding b { color: var(--ink); font-weight: 600; }
+.main { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr); gap: 16px; }
+@media (max-width: 860px) { .main { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.stage-wrap { position: relative; width: 100%; aspect-ratio: 16 / 10; max-width: 100%; touch-action: none; }
+#stage { position: relative; z-index: 1; width: 100%; height: 100%; display: block; border-radius: 8px; background: var(--surface); cursor: grab; }
+#stage3 { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 8px; }
+.stage-wrap.anat #stage { background: transparent; }
+#stage:active { cursor: grabbing; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { font: 500 13px var(--font-body); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 7px; padding: 6px 11px; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.btn:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn[aria-pressed="true"] { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 7px; overflow: hidden; }
+.seg .btn { border: 0; border-radius: 0; }
+select { font: 13px var(--font-body); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 7px; padding: 6px 8px; max-width: 100%; }
+label.inline { font-size: 13px; color: var(--ink-2); display: inline-flex; gap: 6px; align-items: center; }
+input[type=range] { accent-color: var(--accent); width: 100px; }
+.readout-name { font-family: var(--font-display); font-weight: 700; font-size: 36px; line-height: 1; display: flex; align-items: center; gap: 10px; text-wrap: balance; }
+.readout-name .key { width: 14px; height: 14px; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 14px; margin: 0; }
+.facts div { display: grid; gap: 1px; }
+.facts dt { font-size: 12px; color: var(--muted); }
+.facts dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; }
+.facts dd small { color: var(--muted); font-size: 11px; }
+.pill { display: inline-block; font: 500 11px var(--font-mono); padding: 2px 7px; border-radius: 99px; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--rule); }
+.pill.ok { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.note { font-size: 13px; color: var(--ink-2); }
+svg text { fill: var(--ink-2); font-family: var(--font-mono); font-size: 11px; }
+svg .axis-label { fill: var(--muted); font-family: var(--font-body); font-size: 12px; }
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; align-items: baseline; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.scroll-x { overflow-x: auto; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--surface); font: 12px/1.4 var(--font-mono); padding: 7px 9px; border-radius: 6px; max-width: 300px; z-index: 10; }
+.tip b { font-family: var(--font-body); font-weight: 600; }
+.two { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--rule); white-space: nowrap; vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); font-size: 12px; }
+td.n, th.n { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.delta-up { color: var(--up); } td.delta-down { color: var(--down); }
+details summary { cursor: pointer; font-weight: 600; font-size: 14px; }
+.notes { display: grid; gap: 10px; max-width: 80ch; color: var(--ink-2); font-size: 14px; }
+.notes p { margin: 0; }
+.notes b { color: var(--ink); font-weight: 600; }
+.rom-row { display: grid; grid-template-columns: 140px 1fr 150px; gap: 10px; align-items: center; font-size: 12px; }
+.rom-row .val { white-space: nowrap; font-size: 11px; }
+.rom-row .lab { font-family: var(--font-mono); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; }
+.rom-row .val { font-family: var(--font-mono); color: var(--muted); text-align: right; }
+.rom-grid { display: grid; gap: 5px; }
+.mode-switch { display: flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: var(--rule); gap: 1px; }
+.mode-switch button { all: unset; box-sizing: border-box; cursor: pointer; background: var(--surface); padding: 16px 20px; display: grid; gap: 4px; align-content: start; flex: 1 1 170px; }
+.mode-switch button:hover { background: var(--surface-2); }
+.mode-switch .mode-break { flex-basis: 100%; height: 0; margin-top: -1px; }
+.mode-switch button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+.mode-switch button[aria-checked="true"] { background: var(--accent); color: var(--surface); }
+.mode-switch .mode-img { display: block; width: 100%; max-width: 100%; height: 104px; object-fit: contain; object-position: left bottom; margin-bottom: 6px; }
+.mode-switch .mode-k { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+.mode-switch .mode-l { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 30px); line-height: 1; }
+.mode-switch .mode-s { font: 13px var(--font-mono); opacity: .85; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="eyebrow">Predictive simulation · 3D · 30 kg canid</div>
+    <h1>Quadruped Gait Atlas 3D</h1>
+    <p class="lede">A muscle-driven 3D skeleton, balancing in roll and yaw on four legs, finds the periodic gait with the lowest metabolic cost of transport at each speed. Every joint is a general 6-axis connection between two bone ends whose range of motion, laxity and springiness come from one tunable energy function, so the same parameters can be fitted to measurements or optimized together with the gait.</p>
+    <p class="note" style="margin:0" id="update-note"><span class="pill ok">Updated 27 Sep 2026</span> New body: a three-joint spine, an articulated neck and head, and a tail; each muscle's mass now sits in the segment it belongs to, so stronger muscles make heavier limbs; bones may not pass through each other; and the cost of transport now includes keeping the head steady. Every gait was re-solved on this body.</p>
+  </header>
+
+  <section id="mode-section" hidden aria-label="Body">
+    <div class="mode-switch" role="radiogroup" aria-label="Body" id="mode-switch"></div>
+    <p class="note" style="margin:10px 0 0"><a href="./parade.html" style="color:var(--accent)">Watch all nine humanoids walk together in the parade →</a></p>
+  </section>
+
+  <section style="display:grid; gap:10px" aria-labelledby="best-h" id="best-section">
+    <h3 id="best-h">Lowest-energy 3D gait found at each speed</h3>
+    <div class="strip" id="strip"></div>
+    <p class="finding" id="finding"></p>
+  </section>
+
+  <section class="main">
+    <div class="panel">
+      <div class="stage-wrap"><canvas id="stage3" aria-hidden="true" hidden></canvas><canvas id="stage" aria-label="Animated 3D view of the optimized gait; drag to orbit, scroll to zoom"></canvas></div>
+      <div class="controls">
+        <button class="btn" id="play" aria-pressed="true">Pause</button>
+        <span class="seg" role="group" aria-label="Camera">
+          <button class="btn" data-view="three" aria-pressed="true">3/4</button><button class="btn" data-view="side">Side</button><button class="btn" data-view="front">Front</button><button class="btn" data-view="top">Top</button>
+        </span>
+        <label class="inline" for="rate">Speed <input type="range" id="rate" min="0.1" max="1" step="0.05" value="0.35"> <span class="mono" id="rate-v">0.35×</span></label>
+        <label class="inline" for="show-grf"><input type="checkbox" id="show-grf" checked> Ground forces</label>
+        <label class="inline" for="show-outline" id="outline-label" hidden><input type="checkbox" id="show-outline" checked> Body outline</label>
+        <span class="seg" role="group" aria-label="Rendering" id="mode-anat-group" hidden>
+          <button class="btn" data-anat="0" aria-pressed="true">Skeleton</button><button class="btn" data-anat="1" aria-pressed="false">Anatomy</button>
+        </span>
+      </div>
+      <div class="controls" id="anat-controls" hidden>
+        <label class="inline"><input type="checkbox" id="an-bones" checked> Bones</label>
+        <label class="inline"><input type="checkbox" id="an-mus" checked> Muscles &amp; tendons</label>
+        <label class="inline"><input type="checkbox" id="an-lig" checked> Ligaments &amp; cartilage</label>
+        <label class="inline"><input type="checkbox" id="an-org" checked> Organs</label>
+        <label class="inline"><input type="checkbox" id="an-skin" checked> Skin</label>
+        <label class="inline"><input type="checkbox" id="an-fur"> Fur</label>
+        <label class="inline" for="an-op">Skin opacity <input type="range" id="an-op" min="0.05" max="1" step="0.05" value="1"></label>
+        <label class="inline"><input type="checkbox" id="an-cut"> Cut away near half</label>
+        <label class="inline"><input type="checkbox" id="an-fat"> Colour skin by fat thickness</label>
+        <span class="muted" id="an-info"></span>
+      </div>
+      <label class="inline" for="sel" id="sel-label">Solution <select id="sel"></select></label>
+    </div>
+    <div class="panel">
+      <div class="readout-name"><span class="key" id="r-key"></span><span id="r-gait">—</span></div>
+      <div class="note" id="r-note"></div>
+      <dl class="facts" id="facts"></dl>
+      <div style="display:grid; gap:6px">
+        <h3>Footfall pattern</h3>
+        <svg id="footfall" viewBox="0 0 320 118" width="100%" role="img" aria-label="Stance phases of each foot over two strides"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="cot-h" id="cot-section">
+    <div class="chart-head">
+      <div style="display:grid; gap:4px">
+        <h2 id="cot-h">Cost of transport by speed</h2>
+        <div class="muted" style="font-size:13px">Converged 3D optimizations coloured by the gait they converged to; lines join each gait's cheapest solution. The dashed line is the best planar-model result, for reference. Click a point to load it.</div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="scroll-x"><svg id="cot" viewBox="0 0 1100 360" width="100%" style="min-width:560px; display:block" role="img" aria-label="Cost of transport versus speed"></svg></div>
+  </section>
+
+  <section class="two">
+    <div class="panel" aria-labelledby="rom-h">
+      <div style="display:grid; gap:4px">
+        <h2 id="rom-h">How much of each joint the gait uses</h2>
+        <div class="muted" style="font-size:13px">Pale bar: the joint's range of motion on that axis. Dark bar: the range the selected stride actually moves through. Tick: standing pose. Left limbs and spine.</div>
+      </div>
+      <div class="rom-grid" id="romgrid"></div>
+    </div>
+    <div class="panel" aria-labelledby="hip-h">
+      <div style="display:grid; gap:4px">
+        <h2 id="hip-h">Left hip: coupled range and the stride's path</h2>
+        <div class="muted" style="font-size:13px">The hip's flexion × abduction range is one region, not two independent limits; its corners are unreachable. The loop is the selected stride.</div>
+      </div>
+      <svg id="hipsvg" viewBox="0 0 420 330" width="100%" role="img" aria-label="Hip range of motion region and stride trajectory"></svg>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="d6-h" id="d6-section">
+    <div class="chart-head">
+      <div style="display:grid; gap:4px">
+        <h2 id="d6-h">Joints free in all six axes</h2>
+        <div class="muted" style="font-size:13px; max-width:90ch" id="d6-sub"></div>
+      </div>
+      <button class="btn" id="d6-show">Show this gait</button>
+    </div>
+    <div class="scroll-x"><table id="t-d6"></table></div>
+    <p class="note" style="margin:0" id="d6-note"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="var-h" id="var-section">
+    <div class="chart-head">
+      <div style="display:grid; gap:4px">
+        <h2 id="var-h">Same dog, forelimbs twice as long</h2>
+        <div class="muted" style="font-size:13px; max-width:90ch" id="var-sub"></div>
+      </div>
+      <button class="btn" id="var-show">Show this gait</button>
+    </div>
+    <div class="scroll-x"><table id="t-var"></table></div>
+  </section>
+
+  <section class="panel" aria-labelledby="act-h">
+    <div class="chart-head">
+      <div style="display:grid; gap:4px">
+        <h2 id="act-h">Muscle activation over the stride</h2>
+        <div class="muted" style="font-size:13px" id="act-sub">Left limbs and the left side of the trunk, neck and tail. Colour is activation, 0 to 1.</div>
+      </div>
+      <div class="legend"><span>0</span><canvas id="ramp" width="120" height="10" style="border-radius:3px"></canvas><span>1</span></div>
+    </div>
+    <div class="scroll-x"><canvas id="heat" style="width:100%; min-width:560px; display:block" aria-label="Heatmap of muscle activations"></canvas></div>
+  </section>
+
+  <section class="two" id="mus-section">
+    <div class="panel" aria-labelledby="mus-h">
+      <div class="chart-head">
+        <div style="display:grid; gap:4px">
+          <h2 id="mus-h">Muscle mass follows strength</h2>
+          <div class="muted" style="font-size:13px">Each muscle's mass is its volume: cross-section (strength ÷ specific tension, <span id="mus-sigma">0.45</span> MPa) × fibre length × 1060 kg/m³. Along a dashed line (one fibre length) mass is strictly proportional to strength. Bellies in the 3D view are drawn at this cross-section and fibre length.</div>
+        </div>
+        <div class="legend" id="mus-legend"></div>
+      </div>
+      <svg id="massvs" viewBox="0 0 460 330" width="100%" role="img" aria-label="Muscle mass versus maximum isometric force, log scales"></svg>
+    </div>
+    <div class="panel" aria-labelledby="seg-h">
+      <div style="display:grid; gap:4px">
+        <h2 id="seg-h">Where the body's mass is</h2>
+        <div class="muted" style="font-size:13px" id="seg-sub">Segment masses used by the dynamics: muscle bellies sit on the bone they lie along; bone, skin, organs and pads make up the rest of the 30 kg. Left side and the axial skeleton.</div>
+      </div>
+      <svg id="segbars" viewBox="0 0 460 330" width="100%" role="img" aria-label="Segment mass split into muscle and other tissue"></svg>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="cd-h" id="cd-section">
+    <div style="display:grid; gap:4px">
+      <h2 id="cd-h">Co-designing the joints with the gait</h2>
+      <div class="muted" style="font-size:13px" id="cd-sub"></div>
+    </div>
+    <div class="two">
+      <div style="display:grid; gap:10px; align-content:start">
+        <h3>Cost of transport</h3>
+        <div class="scroll-x"><table id="t-cd-cot"></table></div>
+        <h3>Designed joints, physical units</h3>
+        <div class="scroll-x"><table id="t-cd-phys"></table></div>
+      </div>
+      <div style="display:grid; gap:10px; align-content:start">
+        <h3>Most influential joint parameters at the default body</h3>
+        <div class="muted" style="font-size:12px">Change in optimal cost of transport for a +10% change in one parameter, from the optimizer's own sensitivities (no re-solve).</div>
+        <div class="scroll-x"><table id="t-sens"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="fit-h" id="fit-section">
+    <div style="display:grid; gap:4px">
+      <h2 id="fit-h">Fitting a joint to measurements</h2>
+      <div class="muted" style="font-size:13px">Recovery test: noisy boundary points, passive torques and centre-glide samples from a known hip with a tilted, asymmetric, coupled range; a default joint is fitted to them.</div>
+    </div>
+    <div class="two">
+      <svg id="fitsvg" viewBox="0 0 440 340" width="100%" role="img" aria-label="True, fitted and initial range-of-motion boundaries with data points"></svg>
+      <div style="display:grid; gap:10px; align-content:start">
+        <dl class="facts" id="fitfacts"></dl>
+        <p class="note" style="margin:0">The same routine takes real data: goniometric or motion-capture limit configurations, passive moment–angle curves, and joint-centre paths from imaging. Any subset works; a prior keeps unconstrained parameters at their defaults.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="joint-h">
+    <h2 id="joint-h">The joints</h2>
+    <p class="notes" style="margin:0" id="model-sum"></p>
+    <div class="scroll-x"><table id="t-joints"></table></div>
+  </section>
+
+  <section class="panel" aria-labelledby="method-h">
+    <h2 id="method-h">How it works</h2>
+    <div class="notes">
+      <p><b>Joints.</b> Each joint relates a frame on the parent bone to one on the child through six axes: a rotation vector (exponential coordinates, singular only at 180°) and a translation, so its state is the 6-DOF relative pose plus the 6-DOF relative velocity. Any axis is either a generalized coordinate or a smooth polynomial function of the free ones, so hinges, ball joints, gliding centres and spring-suspended slings are one object. Passive behaviour comes from a single potential energy over the whole pose: a coupled spring K = LLᵀ about a rest pose (off-diagonal terms couple axes, e.g. the tibia gliding as the knee flexes), plus exponential walls on range-of-motion regions for rotation and translation, shaped as oriented, offset superellipsoids (exponent p from ellipsoid to near-box) deformed by spherical harmonics; a coupled damper acts on the relative velocity. Every parameter value is a valid joint, and elastic forces are conservative by construction, so an energy-minimizing optimizer cannot harvest work from them.</p>
+      <p><b>Joint play.</b> In the six-axis model the millimetre translations and few-degree off-axis rotations are stiff (cartilage, ligaments) but light: their natural frequencies are hundreds of hertz, far faster than a gait. They are treated as massless, so their equation of motion is the instantaneous balance of passive, muscle, contact and inertial loads from the rest of the body, which is how such tissue behaves at gait frequencies. Their rates use a backward difference. The muscular sling of the scapula (about 8 Hz) keeps full dynamics.</p>
+      <p><b>Dynamics.</b> Floating-base 3D multibody dynamics by Newton–Euler with wrenches accumulated to joint centres and projected onto each joint's motion subspace (from automatic differentiation). Muscle tensions and paw forces enter as point loads. Verified against the planar engine to 3·10⁻¹⁶, and by energy conservation of a tumbling 3D skeleton to 7·10⁻⁷ J.</p>
+      <p><b>Body.</b> 24 segments: ribcage, two lumbar segments and pelvis joined by three spine joints; two neck segments and a head; a three-segment tail; and the limbs. Bones are capsules that may not pass through each other: every pair of limb bones on different legs, and the head, neck and tail against the legs, stay at least their radii plus 3 mm apart at every node, and the snout and tail tip stay above ground.</p>
+      <p><b>Muscles and energy.</b> 70 Hill-type muscle–tendon units with compliant tendons (De Groote et al. 2016) along via-point paths, including hip and shoulder abductors/adductors, trunk obliques, the serratus ventralis that suspends the chest, neck extensors and flexors, and tail muscles. A muscle's mass is its volume (strength ÷ specific tension × fibre length × density) and is placed on the bone its belly lies along, so it adds to that segment's mass and inertia; bone, skin, organs and pads make up the rest of the body mass. Metabolic power from Bhargava et al. (2004).</p>
+      <p><b>Cost.</b> Metabolic cost of transport plus small regularization, plus terms that keep the head steady and level: the head's angular velocity, the eye's acceleration, and the head's pitch (against its standing line of sight, fixed in the world) and roll, averaged over the stride.</p>
+      <p><b>Optimization.</b> Periodic trapezoidal collocation over one stride (50 nodes), IPOPT with exact Hessians; the per-interval derivatives are evaluated on several threads. Each interval's constraints, Jacobian and Hessian are generated symbolically and assembled blockwise, about 5× faster than differentiating the whole problem. Joint parameters are either fixed problem parameters, giving the gradient of the optimal cost with respect to every one of them for free, or decision variables shared by several speeds (co-design).</p>
+      <p><b>Data.</b> Sagittal ranges of motion are converted from Labrador goniometry through this skeleton's segment geometry. Out-of-plane ranges, spine and sling properties, and passive stiffnesses are assumptions and are marked in the joint table.</p>
+      <p><b>Humanoids.</b> The test biped (30 kg and 1.32 m with de Leva's segment proportions: 19 segments, 42 degrees of freedom, 82 muscles), its three variants and the five comic bipeds come from a separate, simpler pipeline, <span class="mono">sim/</span> in this repository. A stride is described by 14 parameters: stride frequency, duty factor, ground-force shape, hip height, step width, heel-off and foot roll-over, pelvis and trunk rotation, lean, arm swing and the height of a virtual pivot point. Each foot's vertical ground force follows Alexander and Jayes's shape family scaled to body weight; the centre of mass is integrated from those forces, with horizontal forces pointing from each foot's rolling pivot (heel, sole, ball) to a virtual pivot point near the centre of mass (Maus et al. 2010), and the periodic solution fixes where the feet land relative to the body. Legs follow by analytic inverse kinematics; toes stay flat on the ground; the head is held level. Joint torques come from inverse dynamics, with each foot's centre of pressure placed inside its sole to leave as little unexplained moment on the pelvis as possible. Muscle forces come from static optimization (least active muscle volume, tendons stretching under load) and energy from Umberger et al. (2003). A Nelder&ndash;Mead search over the parameters, run for walking, running and two-footed hopping, keeps the cheapest. There are no activation dynamics and no forward re-simulation, and gaits with a flight phase are not made to conserve angular momentum in the air, so treat their costs as indicative next to the other bodies'. The kid, ogre, giant and comic bipeds reshape the same body: segment lengths per region, breadth and girth per region, where the shoulders and the neck sit on the ribcage, how far the spine and neck can bend, fat per region and muscle per kilogram per region. Girth is soft tissue: limb muscles keep attachments in proportion to limb length, so a short, thick limb does not overstretch its muscles. Segment masses follow each segment's volume and fat; fat adds mass but no muscle, and the ogre's belly fat sits in front of its abdomen, moving its centre of mass forward. Each muscle's strength is its region's lean mass over its fibre length, so the big bodies are weak for their size (strength grows with size squared, weight with size cubed); the ogre has 40% more muscle per kilogram of lean mass than the others, and the kid less. The search's stride-length and frequency bounds scale with leg length, the ogre's thighs may not overlap (which widens its stance), and it walks at 0.7 m/s rather than 1 m/s. Left alone, the search moves as little as it can, so each variant also has a movement style: ranges its stride must stay inside, plus two new stride parameters, the trunk rocking over each stance foot and a rounded upper back, and higher swing-foot lift with an arm swing that trails the legs. The kid swings its arms wide and toddles; the ogre waddles as if under a heavy load, trunk rocking, feet wide, knees bent, stomping; the giant hunches, bends its knees and swings its arms long. The comic bipeds go further: the bobblehead bounces with its arms flapping out, the hood shuffles deeply hunched with its neck craned and its arms barely moving, the beanpole leans back, lifts its knees high and windmills its arms, the pear waddles with its arms out over its hips, and the brute swaggers, rolling its shoulders against its hips and swinging its heavy arms wide. The search then finds the cheapest stride in that style, which costs more than the plain one. The translucent outline around each humanoid's skeleton is its skin and fat; it is drawn only.</p>
+    </div>
+  </section>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script type="module" src="src/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "quadruped-gait-atlas",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 8124",
+    "build": "vite build",
+    "preview": "vite preview --port 8125",
+    "test": "node --test test/*.test.mjs",
+    "sim:biped": "node sim/build-biped.mjs"
+  },
+  "dependencies": {
+    "three": "0.128.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
