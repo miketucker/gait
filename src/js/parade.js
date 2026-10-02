@@ -206,6 +206,10 @@ let playing = !reduceMotion, rate = 1, simTime = 0, last = performance.now();
 const playBtn = document.getElementById('play'), rateInput = document.getElementById('rate'), rateOut = document.getElementById('rate-v');
 const setPlaying = (p) => { playing = p; playBtn.textContent = p ? 'Pause' : 'Play'; playBtn.setAttribute('aria-pressed', String(p)); };
 setPlaying(playing); playBtn.addEventListener('click', () => setPlaying(!playing));
+const restartBtn = document.getElementById('restart');
+// reset the playback clock (and the travelling camera with it) back to the start
+const restart = () => { simTime = 0; setPlaying(true); draw(); };
+restartBtn.addEventListener('click', restart);
 rateInput.addEventListener('input', () => { rate = +rateInput.value; rateOut.textContent = `${rate.toFixed(2)}×`; });
 namesInput.addEventListener('change', placeTags);
 function resize() { const w = wrapEl.clientWidth, h = wrapEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
@@ -225,4 +229,4 @@ function frame(now) {
 }
 draw(); requestAnimationFrame(frame);
 // for automated checks: jump the parade to a given time
-window.__parade = { walkers: walkers.map((w) => w.key), setTime: (t) => { simTime = t; draw(); }, setView };
+window.__parade = { walkers: walkers.map((w) => w.key), setTime: (t) => { simTime = t; draw(); }, restart, setView };
