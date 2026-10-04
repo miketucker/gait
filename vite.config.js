@@ -5,6 +5,9 @@ import { defineConfig } from 'vite';
 // bodies (the humanoids in src/data/, from `npm run sim:biped`) are merged in at load time.
 // parade.html walks the humanoids together (src/js/parade.js); it loads only their body packs.
 export default defineConfig({
+  // Keep generated asset URLs relative so the build works under /gait/ on
+  // GitHub Pages as well as at the root of a local preview or another host.
+  base: './',
   build: {
     rollupOptions: {
       input: { viewer: 'viewer.html', parade: 'parade.html' },
