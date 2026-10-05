@@ -4,6 +4,7 @@ import { modelFor, theme, readCssVar, orbitCam, VIEW_PRESETS, current, stridePha
 import { poseAtPhase, applyBonePose, strideMaxHeight, makeProjector, boneIndex } from './pose.js';
 import { AnatomyRenderer, anatomyOptions } from './anatomy.js';
 import { drawHeatCursor } from './panels.js';
+import { musclePathSegments, muscleActivationAt } from './muscle-display.js';
 
 export const stageCanvas = document.getElementById('stage'), stageCtx = stageCanvas.getContext('2d');
 export let devicePx = 1;
@@ -37,18 +38,13 @@ export function drawStage() {
   // muscles: fibre in activation colour, tendon in pale; right side dimmed
   if (!useAnatomy) model.muscles.forEach((muscle, i) => {
     const centerline = muscle.path.map(([bone, point]) => applyBonePose(pose, bone, point));
-    const activation = current.a[i][frame] * (1 - blend) + current.a[i][nextFrame] * blend;
+    const activation = muscleActivationAt(current, i, frame, nextFrame, blend);
     const side = legCodeOf(muscle.path[muscle.path.length - 1][0]) || legCodeOf(muscle.path[0][0]) || (/_R$/.test(muscle.name) ? 'R' : 'L');
     const isFar = side[0] === 'R';
-    let pathLen = 0; const segLens = []; for (let j = 0; j + 1 < centerline.length; j++) { const d = Math.hypot(centerline[j + 1][0] - centerline[j][0], centerline[j + 1][1] - centerline[j][1], centerline[j + 1][2] - centerline[j][2]); segLens.push(d); pathLen += d; }
-    const fibreEnd = pathLen - Math.min(0.95, muscle.lts / (muscle.lts + muscle.lopt)) * pathLen;
-    let arcPos = 0;
-    for (let j = 0; j + 1 < centerline.length; j++) {
-      const segStart = arcPos, segEnd = arcPos + segLens[j], lerp = (s) => { const u = (s - segStart) / (segLens[j] || 1); return centerline[j].map((v, t) => v + (centerline[j + 1][t] - v) * u); };
-      if (fibreEnd > segStart) prims.push(muscle.pcsa ? { kind: 'seg', from: centerline[j], to: lerp(Math.min(fibreEnd, segEnd)), widthWorld: 2 * Math.sqrt(muscle.pcsa / Math.PI), color: activationColor(activation), alpha: isFar ? 0.3 : 0.62 }
-        : { kind: 'seg', from: centerline[j], to: lerp(Math.min(fibreEnd, segEnd)), widthPx: Math.max(1.5, Math.sqrt(muscle.F0) * 0.12), color: activationColor(activation), alpha: isFar ? 0.4 : 0.9 });
-      if (segEnd > fibreEnd) prims.push({ kind: 'seg', from: lerp(Math.max(fibreEnd, segStart)), to: centerline[j + 1], widthPx: 1, color: theme.boneFar, alpha: isFar ? 0.4 : 0.9 });
-      arcPos = segEnd;
+    for (const { from, to, tendon } of musclePathSegments(muscle, centerline)) {
+      if (tendon) prims.push({ kind: 'seg', from, to, widthPx: 1, color: theme.boneFar, alpha: isFar ? 0.4 : 0.9 });
+      else prims.push(muscle.pcsa ? { kind: 'seg', from, to, widthWorld: 2 * Math.sqrt(muscle.pcsa / Math.PI), color: activationColor(activation), alpha: isFar ? 0.3 : 0.62 }
+        : { kind: 'seg', from, to, widthPx: Math.max(1.5, Math.sqrt(muscle.F0) * 0.12), color: activationColor(activation), alpha: isFar ? 0.4 : 0.9 });
     }
   });
   // bones

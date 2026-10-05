@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f3d9a4'/%3E%3Ccircle cx='11' cy='10' r='4' fill='%236b5ea8'/%3E%3Cpath d='M11 14v8M8 27l3-5 3 5' stroke='%236b5ea8' stroke-width='2.4' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='22' cy='12' r='3' fill='%23e2654f'/%3E%3Cpath d='M22 15v7M19 27l3-5 3 5' stroke='%23e2654f' stroke-width='2.4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d7d9dd'/%3E%3Ccircle cx='11' cy='10' r='4' fill='%236b5ea8'/%3E%3Cpath d='M11 14v8M8 27l3-5 3 5' stroke='%236b5ea8' stroke-width='2.4' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='22' cy='12' r='3' fill='%23e2654f'/%3E%3Cpath d='M22 15v7M19 27l3-5 3 5' stroke='%23e2654f' stroke-width='2.4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
 <title>Humanoid Parade</title>
-<meta name="description" content="Nine simulated humanoids from the Quadruped Gait Atlas walking together, each on its own simulated stride, drawn as cel-shaded spheres, tubes and cones in a hazy desert.">
+<meta name="description" content="Nine simulated humanoids from the Quadruped Gait Atlas walking together on a gray ground grid, with their bones, tendons and activated muscles visible.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 :root {
-  --ground: #f2f5f4; --surface: #ffffff; --surface-2: #e8eeec;
+  --ground: #f2f3f5; --surface: #ffffff; --surface-2: #e8eaed;
   --ink: #121917; --ink-2: #44514d; --muted: #6b7874; --rule: #d6dfdc;
   --accent: #0b6e6a; --accent-soft: #d5ebe8;
-  /* the scene is an illustration: its sky, haze and sand stay the same in either theme */
-  --sky-top: #bfe8a8; --sky-mid: #e9efb4; --haze: #f3d9a4;
+  /* Keep the gray scene consistent in either page theme. */
+  --scene-background: #d7d9dd;
   --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -23,13 +23,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --ground: #0d1211; --surface: #141b1a; --surface-2: #1c2524; --ink: #e5edea; --ink-2: #b5c2be; --muted: #8b9a95; --rule: #28322f;
+    --ground: #141516; --surface: #1a1c1f; --surface-2: #24272b; --ink: #e5edea; --ink-2: #b5c2be; --muted: #8b9a95; --rule: #28322f;
     --accent: #4cc3ba; --accent-soft: #173834;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --ground: #0d1211; --surface: #141b1a; --surface-2: #1c2524; --ink: #e5edea; --ink-2: #b5c2be; --muted: #8b9a95; --rule: #28322f;
+  --ground: #141516; --surface: #1a1c1f; --surface-2: #24272b; --ink: #e5edea; --ink-2: #b5c2be; --muted: #8b9a95; --rule: #28322f;
   --accent: #4cc3ba; --accent-soft: #173834;
 }
 * { box-sizing: border-box; }
@@ -43,11 +43,11 @@ header { padding-block: 28px 0; display: grid; gap: 10px; }
 h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 6vw, 60px); line-height: .95; margin: 0; letter-spacing: -.01em; }
 .lede { max-width: 72ch; color: var(--ink-2); margin: 0; }
 .scene { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 300px; border-radius: 14px; overflow: hidden; touch-action: none;
-  background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-mid) 38%, var(--haze) 62%, var(--haze) 100%); }
+  background: var(--scene-background); }
 #parade { width: 100%; height: 100%; display: block; cursor: grab; }
 #parade:active { cursor: grabbing; }
 .tags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.tag { position: absolute; left: 0; top: 0; font: 600 12px var(--font-body); color: #3a3040; background: rgba(255, 250, 238, .82); padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.tag { position: absolute; left: 0; top: 0; font: 600 12px var(--font-body); color: #3a3040; background: rgba(255, 255, 255, .82); padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
 .controls { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
 .btn { font: 500 13px var(--font-body); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 7px; padding: 6px 11px; cursor: pointer; }
 .btn:hover { border-color: var(--muted); }
@@ -62,6 +62,9 @@ input[type=range] { accent-color: var(--accent); width: 110px; }
 .legend li { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .legend .mono { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .swatch { width: 12px; height: 12px; border-radius: 50%; flex: none; border: 1px solid rgba(0, 0, 0, .12); }
+.anatomy-key { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: 12px; color: var(--ink-2); }
+.anatomy-key span { display: inline-flex; align-items: center; gap: 6px; }
+.muscle-ramp { width: 100px; height: 10px; border-radius: 3px; background: linear-gradient(to right, #f1dfdc, #e6aca7, #d6716f, #b83342, #7e0c22); }
 .note { max-width: 80ch; color: var(--ink-2); font-size: 14px; margin: 0; }
 </style>
 </head>
@@ -70,10 +73,10 @@ input[type=range] { accent-color: var(--accent); width: 110px; }
   <header>
     <div class="eyebrow"><span>Quadruped Gait Atlas 3D · parade</span><a href="./viewer.html">← back to the atlas</a></div>
     <h1>Humanoid Parade</h1>
-    <p class="lede">Every simulated humanoid walking together: the test biped, the kid, ogre and giant, and the five comic bipeds, each playing back its own simulated stride at its own speed, drawn as cel-shaded spheres, tubes and cones.</p>
+    <p class="lede">Every simulated humanoid walking together: the test biped, the kid, ogre and giant, and the five comic bipeds, each playing back its own simulated stride at its own speed, with bones, tendons and activated muscles visible.</p>
   </header>
   <div class="scene" id="scene">
-    <canvas id="parade" aria-label="Nine cartoon humanoids walking together across a hazy desert; drag to orbit, scroll to zoom"></canvas>
+    <canvas id="parade" aria-label="Nine humanoid skeletons and their activated muscles walking together on a gray ground grid; drag to orbit, scroll to zoom"></canvas>
     <div class="tags" id="tags" hidden></div>
   </div>
   <div class="controls">
@@ -85,8 +88,13 @@ input[type=range] { accent-color: var(--accent); width: 110px; }
     <label class="inline" for="rate">Speed <input type="range" id="rate" min="0.25" max="2" step="0.05" value="1"> <span class="mono" id="rate-v">1.00×</span></label>
     <label class="inline" for="names"><input type="checkbox" id="names"> Names</label>
   </div>
+  <div class="anatomy-key" aria-label="Anatomy colors">
+    <span><i class="swatch" style="background:#343c40"></i> Bones</span>
+    <span><i class="swatch" style="background:#c5bdab"></i> Tendons</span>
+    <span>Muscle activation: low <i class="muscle-ramp" aria-hidden="true"></i> high</span>
+  </div>
   <ul class="legend" id="legend" aria-label="Walkers"></ul>
-  <p class="note">Each walker plays back the stride its simulation found (the same bone poses, stride period and speed as in the atlas), so the slow ones (the hood at 0.6 m/s, the ogre at 0.7, the pear at 0.8) drift back through the crowd. The bodies here are drawn around the skeleton from each body's outline; the dynamics are the atlas's. The track loops: a walker who passes the camera comes back out of the haze.</p>
+  <p class="note">Each walker uses the atlas's bone geometry, muscle attachment paths and muscle cross-sectional areas. Muscle color follows activation through its simulated stride; pale segments show tendons. Each plays back the same bone poses, stride period and speed as in the atlas, so the slow ones (the hood at 0.6 m/s, the ogre at 0.7, the pear at 0.8) drift back through the crowd. The track loops: a walker who passes the camera comes back out of the haze.</p>
 </div>
 <script type="module" src="./src/js/parade.js"></script>
 </body>
